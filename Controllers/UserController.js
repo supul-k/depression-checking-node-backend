@@ -52,11 +52,12 @@ export const Login = async (req, res) => {
 
     var result = await UserService.Login(req.body);
     if (!result.status) {
-      res.status(400).json({ status: false, message: result.message });
+      res.status(400).json({ status: false, message: "Login failed!" });
       return;
     }
 
     res.status(200).json({
+      email: req.body.email,
       status: result.status,
       message: result.message,
       token: result.token,
