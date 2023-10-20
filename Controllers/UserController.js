@@ -29,13 +29,13 @@ export const RegisterUser = async (req, res) => {
     if (!result) {
       res
         .status(400)
-        .json({ status: false, message: "User ragistration faild" });
+        .json({ status: false, message: "User registration failed!" });
       return;
     }
 
     res
-      .status(400)
-      .json({ status: true, message: "User ragistration successfull" });
+      .status(200)
+      .json({ status: true, message: "User registration successfull!" });
     return;
   } catch (error) {
     res.status(400).json({ status: false, message: error });
