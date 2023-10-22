@@ -32,6 +32,8 @@ export const Login = async (request) => {
           status: true,
           message: "User login success",
           token: token,
+          email: user[0].email,
+          user_id: user[0].user_id,
         };
       } else {
         return { status: false, message: "User token generation faild" };
