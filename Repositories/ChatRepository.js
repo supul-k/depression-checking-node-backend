@@ -1,7 +1,7 @@
 import dbConnection from "../Configs/DbConnection.js";
 import * as sqlQuaries from "../Utils/Sql.js";
 
-export const ReceiveMessage = async (request) => {
+export const SaveMessage = async (request, reply_text) => {
   try {
     return await new Promise((resolve, reject) => {
       dbConnection.query(
@@ -9,8 +9,7 @@ export const ReceiveMessage = async (request) => {
         [
           request.user_id,
           request.message_text,
-          request.message_type,
-          request.message_text
+          reply_text
         ],
         (err, result) => {
           if (err) {
