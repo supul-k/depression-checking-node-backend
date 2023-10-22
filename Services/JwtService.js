@@ -13,12 +13,12 @@ export const CreateToken = async (user_id, email ) => {
   }
 };
 
-export const ValidateSuperAdmin = async (req, res, next) => {
+export const ValidateUser = async (req, res, next) => {
   const authToken = req.headers.authorization;
   if (!authToken) {
     res
       .status(401)
-      .json({ status: false, message: "Super admin access required" });
+      .json({ status: false, message: "User login required" });
     return;
   }
 
@@ -30,38 +30,6 @@ export const ValidateSuperAdmin = async (req, res, next) => {
       return;
     }
 
-    if (decoded.role !== "super admin") {
-      res.status(403).json({ status: false, message: "Access denied!" });
-      return;
-    }
-
     next();
   });
 };
-
-
-export const ValidateAdmin = async (req, res, next) => {
-    const authToken = req.headers.authorization;
-    if (!authToken) {
-      res
-        .status(401)
-        .json({ status: false, message: "Super admin or admin access required" });
-      return;
-    }
-  
-    const accessToken = authToken.replace("Bearer ", "");
-  
-    jwtActions.verify(accessToken, "JWT_SECRET", (error, decoded) => {
-      if (error) {
-        res.status(401).json({ status: false, message: error.message });
-        return;
-      }
-  
-      if (decoded.role !== "super admin" && decoded.role !== "admin") {
-        res.status(403).json({ status: false, message: "Access denied!" });
-        return;
-      }
-  
-      next();
-    });
-  };

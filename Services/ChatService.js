@@ -16,10 +16,14 @@ export const ReceiveMessage = async (request) => {
     //   if (code === 0) {
     //     // return { message: reply, status: true };
     try {
-      const reply_text = "hello this is a chatbot response";
+      const reply_text = "Reply text working";
       const Message = await ChatRepository.SaveMessage(request, reply_text);
       // const replyMessage = await ChatRepository.SendMessage(reply_text, request.message_id);
-      return { message: reply_text, status: true };
+      if (!Message) {
+        return { message: "Message not saved", status: false };
+      } else {
+        return { message: reply_text, status: true };
+      }
     } catch (error) {
       // Handle the error here, you can log it or take appropriate actions
       console.error("An error occurred:", error);

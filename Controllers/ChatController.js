@@ -1,6 +1,7 @@
 import * as ChatService from "../Services/ChatService.js";
 
 export const ReceiveMessage = async (req, res) => {
+  console.log(req.body);
     try {
       const result = await ChatService.ReceiveMessage(req.body);
       if (!result) {
