@@ -5,7 +5,7 @@ export const CreateToken = async (user_id, email ) => {
     const accessToken = await jwtActions.sign(
       { user_id: user_id, email: email},
       "JWT_SECRET",
-      { expiresIn: "1h" }
+      { expiresIn: "12h" }
     );
     return accessToken;
   } catch (error) {
