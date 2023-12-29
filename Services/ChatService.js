@@ -41,8 +41,8 @@ import { spawn } from "child_process";
 
 export const ReceiveMessage = async (request) => {
   try {
-    const promptInput = request.message_text;
-    const pythonProcess = spawn("python", ["path/to/chatbot.py", promptInput]);    
+    const input_message = request.message_text;
+    const pythonProcess = spawn("python", ["path/to/chatbot.py", input_message]);    
     // const pythonProcess = spawn('python', ['../Services/chatbot.py', input_message]);
     let reply = "";
     pythonProcess.stdout.on("data", (data) => {
