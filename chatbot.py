@@ -1,6 +1,7 @@
 import sys
 import replicate
 import os
+sys.stdout.reconfigure(encoding='utf-8')
 
 os.environ["REPLICATE_API_TOKEN"] = "r8_CDPIvI5UPJxpFwHpR4bxALy0jAl8J2T4AL2sp"
 

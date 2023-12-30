@@ -113,7 +113,7 @@ export const ReceiveMessage = async (request) => {
         console.log("Python script exited with code", code);
 
         if (code === 0) {
-          resolve(reply.trim());
+          resolve(reply);
         } else {
           reject(new Error("Machine learning module error"));
         }
@@ -126,7 +126,7 @@ export const ReceiveMessage = async (request) => {
     const pre_prompt =
       "You are a helpful assistant. You do not respond as 'User' or pretend to be 'User'. You only respond once as 'Assistant'.";
 
-    const reply = await runPythonScript(input_message, pre_prompt);
+    const reply = await runPythonScript(input_message, pre_prompt, { encoding: 'utf-8' });
 
     const reply_text = reply.trim();
     console.log("Response from Python script:", reply_text);
