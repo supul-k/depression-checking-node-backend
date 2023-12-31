@@ -4,5 +4,6 @@ import * as jwtService from '../Services/JwtService.js';
 const router = express.Router();
 
 router.post('/receive_message',jwtService.ValidateUser, ChatController.ReceiveMessage);
+router.post('/evaluate',jwtService.ValidateUser, ChatController.EvaluateMessage);
 
 export default router;

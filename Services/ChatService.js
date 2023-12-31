@@ -143,3 +143,51 @@ export const ReceiveMessage = async (request) => {
     return { message: "Internal server error", status: false };
   }
 };
+
+export const EvaluateMessage = async (request) => {
+  const runPythonScript = (evaluate_data) => {
+    return new Promise((resolve, reject) => {
+      const pythonProcess = spawn("python", [
+        "D:/Web_Applications/Depression-Chat-App/depression-checking-node-backend/chatbot.py",
+        evaluate_data
+      ]);
+
+      let reply = "";
+
+      pythonProcess.stdout.on("data", (full_response) => {
+        reply += full_response.toString();
+      });
+
+      pythonProcess.stderr.on("data", (error) => {
+        console.error(`Error from Python script: ${error}`);
+      });
+
+      pythonProcess.on("close", (code) => {
+        console.log("Python script exited with code", code);
+
+        if (code === 0) {
+          resolve(reply);
+        } else {
+          reject(new Error("Machine learning module error"));
+        }
+      });
+    });
+  };
+
+  try {
+    const evaluate_data = request;
+
+    // const reply = await runPythonScript(evaluate_data, { encoding: 'utf-8' });
+
+    // console.log("Response from Python script:", reply);
+    const reply = '80%'; 
+    if (!reply) {
+      return { message: "Evaluation failed", status: false };
+    } else {
+      return { message: reply, status: true };
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+    return { message: "Internal server error", status: false };
+  }
+};
