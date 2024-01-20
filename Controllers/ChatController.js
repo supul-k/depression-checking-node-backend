@@ -17,7 +17,9 @@ export const ReceiveMessage = async (req, res) => {
   export const EvaluateMessage = async (req, res) => {
     console.log(req.body);
       try {
+        console.log(req.body)
         const result = await ChatService.EvaluateMessage(req.body);
+        
         if (!result) {
           res.status(400).json({ status: false, message: result.message });
         } else {

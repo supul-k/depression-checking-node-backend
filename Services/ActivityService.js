@@ -2,7 +2,7 @@ import { log } from "console";
 import * as ChatRepository from "../Repositories/ChatRepository.js";
 import { spawn } from "child_process";
 
-export const ReceiveMessage = async (request) => {
+export const DefineChatType = async (request) => {
   const runPythonScript = (input_message, pre_prompt) => {
     return new Promise((resolve, reject) => {
       const pythonProcess = spawn("python", [
@@ -32,9 +32,9 @@ export const ReceiveMessage = async (request) => {
       });
     });
   };
-
   try {
-    const input_message = request.message_text;
+    const input_message = request;
+    console.log(input_message);
     const pre_prompt =
       "You are a helpful assistant. You do not respond as 'User' or pretend to be 'User'. You only respond once as 'Assistant'.";
 
@@ -58,12 +58,13 @@ export const ReceiveMessage = async (request) => {
   }
 };
 
-export const EvaluateMessage = async (request) => {
-  const runPythonScript = (evaluate_data) => {
+export const SendMessage = async (request) => {
+  const runPythonScript = (input_message, pre_prompt) => {
     return new Promise((resolve, reject) => {
       const pythonProcess = spawn("python", [
-        "D:/Web_Applications/Depression-Chat-App/depression-checking-node-backend/depression_level.py",
-        evaluate_data,
+        "D:/Web_Applications/Depression-Chat-App/depression-checking-node-backend/chatbot.py",
+        input_message,
+        pre_prompt,
       ]);
 
       let reply = "";
@@ -87,21 +88,26 @@ export const EvaluateMessage = async (request) => {
       });
     });
   };
-
   try {
-    const evaluate_data = request;
+    const input_message = request;
+    console.log(input_message);
+    const pre_prompt =
+      "You are a helpful assistant. You do not respond as 'User' or pretend to be 'User'. You only respond once as 'Assistant'.";
 
-    const reply = await runPythonScript(evaluate_data, { encoding: "utf-8" });
-    console.log("Response from Python script:", reply);    
+    const reply = await runPythonScript(input_message, pre_prompt, {
+      encoding: "utf-8",
+    });
 
-    if (!reply) {
-      return { message: "Evaluation failed", status: false };
+    const reply_text = reply.trim();
+    console.log("Response from Python script:", reply_text);
+
+    const Message = await ChatRepository.SaveMessage(request, reply_text);
+
+    if (!Message) {
+      return { message: "Message not saved", status: false };
     } else {
-      const match = /\[([\d.]+)\]/.exec(reply);
-      const extractedNumber = match[1];
-      return { message: extractedNumber, status: true };
+      return { message: reply_text, status: true };
     }
-    
   } catch (error) {
     console.error("An error occurred:", error);
     return { message: "Internal server error", status: false };
