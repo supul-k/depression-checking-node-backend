@@ -6,7 +6,7 @@ export const DefineChatType = async (request) => {
   const runPythonScript = (input_message, pre_prompt) => {
     return new Promise((resolve, reject) => {
       const pythonProcess = spawn("python", [
-        "D:/Web_Applications/Depression-Chat-App/depression-checking-node-backend/chatbot.py",
+        "chatbot.py",
         input_message,
         pre_prompt,
       ]);
@@ -62,7 +62,7 @@ export const SendMessage = async (request) => {
   const runPythonScript = (input_message, pre_prompt) => {
     return new Promise((resolve, reject) => {
       const pythonProcess = spawn("python", [
-        "D:/Web_Applications/Depression-Chat-App/depression-checking-node-backend/chatbot.py",
+        "lm.py",
         input_message,
         pre_prompt,
       ]);

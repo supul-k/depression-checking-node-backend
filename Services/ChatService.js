@@ -6,7 +6,7 @@ export const ReceiveMessage = async (request) => {
   const runPythonScript = (input_message, pre_prompt) => {
     return new Promise((resolve, reject) => {
       const pythonProcess = spawn("python", [
-        "D:/Web_Applications/Depression-Chat-App/depression-checking-node-backend/chatbot.py",
+        "chatbot.py",
         input_message,
         pre_prompt,
       ]);
@@ -62,7 +62,7 @@ export const EvaluateMessage = async (request) => {
   const runPythonScript = (evaluate_data) => {
     return new Promise((resolve, reject) => {
       const pythonProcess = spawn("python", [
-        "D:/Web_Applications/Depression-Chat-App/depression-checking-node-backend/depression_level.py",
+        "depression_level.py",
         evaluate_data,
       ]);
 
