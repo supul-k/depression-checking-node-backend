@@ -24,6 +24,7 @@ export const Login = async (request) => {
       var token = await JwtService.CreateToken(
         user[0].user_id,
         user[0].email,
+        user[0].username,
         "user"
       );
 
@@ -34,6 +35,7 @@ export const Login = async (request) => {
           token: token,
           email: user[0].email,
           user_id: user[0].user_id,
+          username: user[0].username,
         };
       } else {
         return { status: false, message: "User token generation faild" };

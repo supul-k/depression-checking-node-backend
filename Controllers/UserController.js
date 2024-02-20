@@ -55,10 +55,12 @@ export const Login = async (req, res) => {
       res.status(400).json({ status: false, message: "Login failed!" });
       return;
     }
+    console.log(result);
 
     res.status(200).json({
       email: result.email,
       user_id: result.user_id,
+      username: result.username,
       status: result.status,
       message: result.message,
       token: result.token,

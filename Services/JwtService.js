@@ -1,9 +1,9 @@
 import jwtActions from "jsonwebtoken";
 
-export const CreateToken = async (user_id, email ) => {
+export const CreateToken = async (user_id, email, username ) => {
   try {
     const accessToken = await jwtActions.sign(
-      { user_id: user_id, email: email},
+      { user_id: user_id, email: email, username: username},
       "JWT_SECRET",
       { expiresIn: "2h" }
     );
