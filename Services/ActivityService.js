@@ -62,7 +62,7 @@ export const SendMessage = async (request) => {
   const runPythonScript = (input_message, pre_prompt) => {
     return new Promise((resolve, reject) => {
       const pythonProcess = spawn("python", [
-        "lm.py",
+        "activity_new.py",
         input_message,
         pre_prompt,
       ]);
